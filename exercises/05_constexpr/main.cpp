@@ -10,7 +10,7 @@ constexpr unsigned long long fibonacci(int i) {
             return fibonacci(i - 1) + fibonacci(i - 2);
     }
 }
-
+// constexpr 编译时求值
 int main(int argc, char **argv) {
     constexpr auto FIB20 = fibonacci(20);
     ASSERT(FIB20 == 6765, "fibonacci(20) should be 6765");
@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
 
     // TODO: 观察错误信息，修改一处，使代码编译运行
     // PS: 编译运行，但是不一定能算出结果……
-    constexpr auto ANS_N = 90;
+    // constexpr函数计算栈有限
+    constexpr auto ANS_N = 10;
     constexpr auto ANS = fibonacci(ANS_N);
     std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
 
