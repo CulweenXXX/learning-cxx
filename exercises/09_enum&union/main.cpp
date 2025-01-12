@@ -37,11 +37,13 @@ ColorEnum convert_by_pun(Color c) {
 
     TypePun pun;
     // TODO: 补全类型双关转换
-
+    pun.c=c;
+    // printf("%d\n",pun.e);
     return pun.e;
 }
 
 int main(int argc, char **argv) {
+    // printf("%d\n",convert_by_pun(Color::Red));
     ASSERT(convert_by_pun(Color::Red) == COLOR_RED, "Type punning conversion");
     ASSERT(convert_by_pun(Color::Green) == COLOR_GREEN, "Type punning conversion");
     ASSERT(convert_by_pun(Color::Yellow) == COLOR_YELLOW, "Type punning conversion");
