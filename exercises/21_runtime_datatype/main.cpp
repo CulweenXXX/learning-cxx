@@ -25,6 +25,7 @@ float sigmoid(float x) {
 TaggedUnion sigmoid_dyn(TaggedUnion x) {
     TaggedUnion ans{x.type};
     // TODO: 根据 type 调用 sigmoid
+    ans=sigmoid(ans);
     return ans;
 }
 
