@@ -16,11 +16,11 @@ public:
     // TODO: 实现复制构造器
     // 复制构造器也是构造器
     // = delete 可以在模板中删除一部分函数
-    DynFibonacci(DynFibonacci const &others):
+    DynFibonacci(DynFibonacci const &others): 
         cache(new size_t[others.cached]),
         cached(others.cached){
-        memcpy(cache,others.cache,cached*sizeof(size_t));
-    }
+            std::memcpy(cache,others.cache,cached*sizeof(size_t));
+        }
 
     // TODO: 实现析构器，释放缓存空间
     ~DynFibonacci() {delete[] cache;}

@@ -2,7 +2,7 @@
 
 // READ: 函数模板 <https://zh.cppreference.com/w/cpp/language/function_template>
 // TODO: 将这个函数模板化
-template<typename T>
+template<class T>
 T plus(T a, T b) {
     return a + b;
 }

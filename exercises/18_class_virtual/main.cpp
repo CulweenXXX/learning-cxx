@@ -21,6 +21,7 @@ struct B : public A {
 };
 struct C : public B {
     // READ: final <https://zh.cppreference.com/w/cpp/language/final>
+    // final:阻断  再继承C的无法再去重写
     char virtual_name() const final {
         return 'C';
     }
