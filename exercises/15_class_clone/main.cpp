@@ -19,8 +19,7 @@ public:
     DynFibonacci(DynFibonacci const &others):
         cache(new size_t[others.cached]),
         cached(others.cached){
-        // 在github上要用std::memcpy
-        std::memcpy(cache,others.cache,cached*sizeof(size_t));
+        memcpy(cache,others.cache,cached*sizeof(size_t));
     }
 
     // TODO: 实现析构器，释放缓存空间
