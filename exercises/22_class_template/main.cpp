@@ -10,8 +10,23 @@ struct Tensor4D {
     Tensor4D(unsigned int const shape_[4], T const *data_) {
         unsigned int size = 1;
         // TODO: 填入正确的 shape 并计算 size
+        for(int i=0u;i<4;i++){
+            shape[i]=shape_[i];
+        }
+        for(int i=0u;i<4;i++){
+            size*=shape_[i];
+        }
+        // std::cout<<size<<std::endl;
         data = new T[size];
-        std::memcpy(data, data_, size * sizeof(T));
+        // std::memcpy(data, data_, size * sizeof(T));
+        for(auto i=0;i<size;i++){
+            data[i]=data_[i];
+        }
+
+        // for(auto i=0;i<size;i++){
+        //     std::cout<<data[i]<<" ";
+        // }
+        // std::cout<<std::endl;
     }
     ~Tensor4D() {
         delete[] data;
@@ -28,7 +43,49 @@ struct Tensor4D {
     // 则 `this` 与 `others` 相加时，3 个形状为 `[1, 2, 1, 4]` 的子张量各自与 `others` 对应项相加。
     Tensor4D &operator+=(Tensor4D const &others) {
         // TODO: 实现单向广播的加法
-        
+        bool broadcast[4];
+        // for(int i=0;i<4;i++)
+            // std::cout<<"broadcast:"<<others.shape[i]<<std::endl;
+        // printf("this->shape:{%d,%d,%d,%d}\n",shape[0],shape[1],shape[2],shape[3]);
+        // printf("others.shape:{%d,%d,%d,%d}\n",others.shape[0],others.shape[1],others.shape[2],others.shape[3]);
+
+        for(int i=0;i<4;++i){
+            // if(this->shape[i]==others.shape[i]){
+            //     broadcast[i]=true;
+            // }
+            if(broadcast[i]=shape[i]!=others.shape[i]) 
+                // std::cout<<"i:"<<i<<" broadcast:"<<broadcast[i]<<" others.shape[i]:"<<others.shape[i]<<std::endl;
+                ASSERT(others.shape[i]==1,"!");
+        }
+
+        // printf("broadcast:{%d,%d,%d,%d}\n",broadcast[0],broadcast[1],broadcast[2],broadcast[3]);
+
+        auto dst=this->data;
+        auto src=others.data;
+
+        T *marks[4]{src};
+
+        // printf("marks:{%d,%d,%d,%d}\n",marks[0],marks[1],marks[2],marks[3]);
+
+        for(auto i0=0u;i0<shape[0];++i0){
+            if(broadcast[0]) src=marks[0];
+            marks[1]=src;
+
+            for(auto i1=0u;i1<shape[1];++i1){
+                if(broadcast[1]) src=marks[1];
+                marks[2]=src;
+
+                for(auto i2=0u;i2<shape[2];++i2){
+                    if(broadcast[2]) src=marks[2];
+                    marks[3]=src;
+
+                    for(auto i3=0u;i3<shape[3];++i3){
+                        if(broadcast[3]) src=marks[3];
+                        *dst++ += *src++;
+                     }
+                }
+            }
+        }
         return *this;
     }
 };
